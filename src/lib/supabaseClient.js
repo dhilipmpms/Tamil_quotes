@@ -13,7 +13,9 @@ const isSupabaseConfigured =
 let supabase;
 
 if (isSupabaseConfigured) {
-  supabase = createClient(supabaseUrl, supabaseAnonKey);
+  // Strip trailing slashes to prevent double-slash API paths
+  const cleanUrl = supabaseUrl.replace(/\/+$/, '');
+  supabase = createClient(cleanUrl, supabaseAnonKey);
 } else {
   // Mock Database implementation for LocalStorage fallback
   console.warn('Supabase URL/Key missing or default. Falling back to Local Mock Database.');
